@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <style>
+        /* Define the styles for highlighting */
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+<head>
+    <title>Your Cart</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}" defer></script>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'product_list' %}">My Online Store</a></h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'product_list' %}">Home</a></li>
+                <li><a href="{% url 'cart' %}">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Your Cart</h1>
+        
+            <ul>
+                {% for item in cart_items %}
+                <li>
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="100">
+                    {{ item.product.name }} - Quantity: {{ item.quantity }}
+                    - <a href="{% url 'remove_from_cart' item.product.id %}">Remove</a>
+                </li>
+                {% endfor %}
+            </ul>
+            
+        <p>Total Amount: <span class="highlight">${{ total_amount }}</span></p>
+           
+        
+    </main>
+    <footer>
+        <p>&copy; 2023 My Online Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>
